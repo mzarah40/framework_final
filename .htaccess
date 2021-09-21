@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /framework/index.php?url=$1 [QSA,L]
+
+#sudo a2enmod rewrite
+#sudo systemctl restart apache2
