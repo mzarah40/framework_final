@@ -121,6 +121,12 @@ class FlashQuery
 		foreach ($ob as $idx => $value) {
 			$this->sql .= " ORDER BY " . SecurityHelper::cleanInjection($idx) . " " . SecurityHelper::cleanInjection($value) . ",";
 		}
+
+		$this->sql = substr($this->sql, 0, -1);
+
+		$this->sql .= ' ';
+
+		return $this;
 	}
 
 	public function insert (string $table, array $fields)
@@ -133,11 +139,19 @@ class FlashQuery
 
 		$this->sql = substr($this->sql, 0, -1);
 
+		// executa e retorna um resultado
+
+		return $this->run->execute($this->sql);
+
 	}
 
 	public function insertBySelect (string $table, string $select) 
 	{
 		$this->sql = " INSERT INTO " . $table . " " . $select;
+
+		// executa e retorna um resultado
+
+		return $this->run->execute($this->sql);
 
 	}
 
@@ -154,11 +168,24 @@ class FlashQuery
 
 		$this->sql = substr($this->sql, 0, -1);
 
+		// executa e retorna um resultado
+
+		return $this->run->execute($this->sql);
+
+	}
+
+	public function delete (int $id, string $table) : bool 
+	{
+		$this->sql = "DELETE FROM " . $table . " WHERE id = '" . SecurityHelper::cleanInjection($id) . "'";
+
+		// executa e retorna um resultado
+
+		return $this->run->execute($this->sql);
 	}
 
 	public function get() 
 	{
-		return $this->run->get($this->sql);
+		return $this->run->execute($this->sql);
 	}
-	
+
 }

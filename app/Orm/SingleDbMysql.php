@@ -25,7 +25,7 @@ class SingleDbMysql implements DBInterface
 		return self::$instance;
 	}
 
-	public function get ($sql)
+	public function execute ($sql)
 	{
 		$this->resultSet = mysqli_query($this->connection, $sql);
 
